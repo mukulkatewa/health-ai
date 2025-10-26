@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    // File Layout
+    "outDir": "./dist",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+
+    // Module Settings - ADD THESE
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ESNext",
+
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "prisma"]
+}

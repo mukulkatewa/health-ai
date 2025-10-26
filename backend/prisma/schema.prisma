@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  DOCTOR
+  PATIENT
+}
+
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  password String
+  name String
+  role Role 
+  createdAt DateTime @default(now())
+
+  patient Patient?
+  doctor Doctor?
+}
+
+model Patient {
+  id String @id @default(uuid())
+  userId String @unique
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dateOfBirth DateTime
+  bloodGroup String?
+  allergies String?
+  phone String?
+
+  healthRecords HealthRecord[]
+  aiAnalyses AIAnalysis[]
+  conversations Conversation[]
+}
+
+model Doctor {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  specialization  String
+  licenseNumber   String   @unique
+  phone           String?
+  
+  healthRecords   HealthRecord[]
+  conversations   Conversation[]
+}
+
+model HealthRecord {
+  id String @id @default(uuid())
+  patientId String
+  patient Patient @relation(fields: [patientId], references: [id])
+  doctorId String
+  doctor Doctor @relation(fields: [doctorId], references: [id])
+
+  diagnosis String
+  symptoms String?
+  notes String?
+  visitDate DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  prescriptions Prescription[]
+  testResults TestResult[]
+}
+
+model Prescription {
+  id              String       @id @default(uuid())
+  healthRecordId  String
+  healthRecord    HealthRecord @relation(fields: [healthRecordId], references: [id])
+  
+  medicineName    String
+  dosage          String
+  frequency       String
+  duration        String
+  instructions    String?
+  createdAt       DateTime     @default(now())
+}
+
+
+model TestResult {
+  id              String       @id @default(uuid())
+  healthRecordId  String
+  healthRecord    HealthRecord @relation(fields: [healthRecordId], references: [id])
+  
+  testName        String
+  result          String
+  normalRange     String?
+  fileUrl         String?
+  testDate        DateTime
+  createdAt       DateTime     @default(now())
+}
+
+
+model AIAnalysis {
+  id              String   @id @default(uuid())
+  patientId       String
+  patient         Patient  @relation(fields: [patientId], references: [id])
+  
+  riskFactors     String[]
+  predictions     String
+  recommendations String
+  riskScore       Int      // 1-10
+  analyzedAt      DateTime @default(now())
+}
+
+
+model Conversation {
+  id          String   @id @default(uuid())
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  doctorId    String?
+  doctor      Doctor?  @relation(fields: [doctorId], references: [id])
+  
+  messages    Message[]
+  createdAt   DateTime @default(now())
+}
+
+model Message {
+  id              String       @id @default(uuid())
+  conversationId  String
+  conversation    Conversation @relation(fields: [conversationId], references: [id])
+  
+  senderId        String
+  senderRole      Role
+  content         String
+  isAI            Boolean      @default(false)
+  createdAt       DateTime     @default(now())
+}
