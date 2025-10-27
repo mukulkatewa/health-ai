@@ -2,11 +2,17 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/package.json",
+      "src": "frontend/medico-sync-pro/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
       }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/medico-sync-pro/$1"
     }
   ]
 }
