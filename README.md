@@ -8,6 +8,7 @@ Health-AI is a web-based application built with Express.js and TypeScript, desig
 
 Links:
 Frontend: https://medico-sync-cgkaobdxc-kaksaab2605-8884s-projects.vercel.app
+
 Backend: https://health-ai-production-2b49.up.railway.app/api
 
 ## ✨ Features
