@@ -6,6 +6,10 @@
 
 Health-AI is a web-based application built with Express.js and TypeScript, designed to revolutionize healthcare through the power of artificial intelligence. While specific AI functionalities are not detailed, the application's foundation in robust technologies suggests a platform poised for data-driven insights and innovative solutions within the health sector. This project provides a solid starting point for future development of AI-powered health tools.
 
+Links:
+Frontend: https://medico-sync-cgkaobdxc-kaksaab2605-8884s-projects.vercel.app
+Backend: https://health-ai-production-2b49.up.railway.app/api
+
 ## ✨ Features
 
 - 🕸️ Web
